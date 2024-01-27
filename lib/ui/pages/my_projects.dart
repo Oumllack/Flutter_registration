@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../assets/colors.dart';
+import 'package:test_pt/assets/colors.dart';
 import 'my_account.dart';
 import 'my_plans.dart';
 

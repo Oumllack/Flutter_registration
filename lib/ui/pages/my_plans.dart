@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../assets/colors.dart';
 
 class MyPlans extends StatefulWidget {
   const MyPlans({super.key});

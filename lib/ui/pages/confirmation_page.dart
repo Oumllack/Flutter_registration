@@ -1,19 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:test_pt/main.dart';
-import '../assets/colors.dart';
-import 'package:flutter/services.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'my_projects.dart';
-import 'my_account.dart';
+import 'dart:async';
 
-class ConfirmtaionPage extends StatefulWidget {
-  const ConfirmtaionPage({super.key});
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:test_pt/assets/colors.dart';
+import 'my_projects.dart';
+
+class ConfirmationPage extends StatefulWidget {
+  const ConfirmationPage({
+    super.key,
+    required this.phoneNumber,
+  });
+
+  final String phoneNumber;
 
   @override
-  State<ConfirmtaionPage> createState() => _ConfirmationPageState();
+  State<ConfirmationPage> createState() => _ConfirmationPageState();
 }
 
-class _ConfirmationPageState extends State<ConfirmtaionPage> {
+class _ConfirmationPageState extends State<ConfirmationPage> {
   late TextEditingController controller;
 
   final String requiredNumber = '12345';
@@ -21,7 +26,6 @@ class _ConfirmationPageState extends State<ConfirmtaionPage> {
   @override
   void initState() {
     super.initState();
-
     controller = TextEditingController();
   }
 
@@ -31,7 +35,7 @@ class _ConfirmationPageState extends State<ConfirmtaionPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
+        leading: const IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: AppColors.grey_1,
@@ -151,9 +155,7 @@ class _ConfirmationPageState extends State<ConfirmtaionPage> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
               Text(
                 'Подтверждение',
                 style: TextStyle(
@@ -162,13 +164,11 @@ class _ConfirmationPageState extends State<ConfirmtaionPage> {
                   color: AppColors.grey_1,
                 ),
               ),
-              SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
               SizedBox(
                 width: 295,
                 child: Text(
-                  'Введите код, который мы отправили в SMS на +7(966) 666 66 66',
+                  'Введите код, который мы отправили в SMS на ${widget.phoneNumber}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -177,56 +177,104 @@ class _ConfirmationPageState extends State<ConfirmtaionPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 38,
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              PinCodeTextField(
-                appContext: context,
-                length: 5,
-                keyboardType: TextInputType.number,
-                animationType: AnimationType.none,
-                cursorColor: Colors.black,
-                controller: TextEditingController(),
-                onChanged: (value) {},
-                pinTheme: PinTheme(
-                  inactiveColor: AppColors.grey_1,
-                  activeColor: AppColors.grey_1,
-                ),
-                onCompleted: (value) {
-                  if (value == requiredNumber) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyProjects(),
-                      ),
-                    );
-                  } else {
-                    print('invalid pin');
-                  }
-                },
-              ),
-              SizedBox(
-                height: 62,
-              ),
-              SizedBox(
-                width: 250,
-                child: Text(
-                  '60 сек до повтора отправки кода',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.grey_1,
+              const SizedBox(height: 42),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 55.0),
+                child: PinCodeTextField(
+                  appContext: context,
+                  length: 5,
+                  keyboardType: TextInputType.number,
+                  animationType: AnimationType.none,
+                  cursorColor: Colors.black,
+                  controller: TextEditingController(),
+                  onChanged: (value) {},
+                  pinTheme: PinTheme(
+                    inactiveColor: AppColors.grey_1,
+                    activeColor: AppColors.grey_1,
                   ),
+                  onCompleted: (value) {
+                    if (value == requiredNumber) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyProjects(),
+                        ),
+                      );
+                    } else {
+                      print('invalid pin');
+                    }
+                  },
                 ),
               ),
+              const SizedBox(height: 62),
+              const _SendCodeTimer(),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class _SendCodeTimer extends StatefulWidget {
+  const _SendCodeTimer({super.key});
+
+  @override
+  State<_SendCodeTimer> createState() => _SendCodeTimerState();
+}
+
+class _SendCodeTimerState extends State<_SendCodeTimer> {
+  Timer? _timer;
+  int remainingTime = 60;
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void startTimer() {
+    _timer ??= Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        setState(() {
+          remainingTime--;
+        });
+        if (remainingTime == 0) {
+          timer.cancel();
+          _timer = null;
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return remainingTime == 0
+        ? CupertinoButton(
+            child: const Text('Отправить код еще раз'),
+            onPressed: () {
+              remainingTime = 60;
+              startTimer();
+            },
+          )
+        : SizedBox(
+            width: 250,
+            child: Text(
+              '$remainingTime сек до повтора отправки кода',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: AppColors.grey_1,
+              ),
+            ),
+          );
   }
 }
