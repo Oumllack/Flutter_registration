@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import '../assets/colors.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});

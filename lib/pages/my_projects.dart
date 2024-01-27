@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
-import 'MyAccount.dart';
-import 'MyPlans.dart';
+import '../assets/colors.dart';
+import 'my_account.dart';
+import 'my_plans.dart';
 
 class MyProjects extends StatefulWidget {
   const MyProjects({super.key});

@@ -1,37 +1,28 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import 'package:test_pt/main.dart';
+import '../assets/colors.dart';
 import 'package:flutter/services.dart';
-import 'ConfirmationPage.dart';
-import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'my_projects.dart';
+import 'my_account.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ConfirmtaionPage extends StatefulWidget {
+  const ConfirmtaionPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ConfirmtaionPage> createState() => _ConfirmationPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  bool isButtonActive = true;
+class _ConfirmationPageState extends State<ConfirmtaionPage> {
   late TextEditingController controller;
+
+  final String requiredNumber = '12345';
 
   @override
   void initState() {
     super.initState();
 
     controller = TextEditingController();
-    controller.addListener(() {
-      final isButtonActive = controller.text.isNotEmpty;
-
-      setState(() => this.isButtonActive = isButtonActive);
-    });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -63,24 +54,18 @@ class _HomePageState extends State<HomePage> {
                     width: 36,
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text(
-                        '1',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF4E4E4E),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
                     ),
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0xFFFFB800),
+                          color: Colors.white,
                         ),
                       ],
                       borderRadius: BorderRadius.all(
                         Radius.circular(36),
+                      ),
+                      border: Border.all(
+                        color: Color(0xFF39A314),
                       ),
                     ),
                   ),
@@ -89,6 +74,20 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       height: 1,
                       color: Color(0xFFD9D9D9),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.check,
+                                size: 20,
+                                color: Color(0xFFD9D9D9),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -109,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Color(0xFFECECEC),
+                          color: Color(0xFFFFB800),
                         ),
                       ],
                       borderRadius: BorderRadius.all(
@@ -156,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                 height: 24,
               ),
               Text(
-                'Регистрация',
+                'Подтверждение',
                 style: TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.w700,
@@ -167,9 +166,9 @@ class _HomePageState extends State<HomePage> {
                 height: 24,
               ),
               SizedBox(
-                width: 200,
+                width: 295,
                 child: Text(
-                  'Введите номер телефона для регистрации',
+                  'Введите код, который мы отправили в SMS на +7(966) 666 66 66',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -181,101 +180,47 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 38,
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Номер телефона',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
               SizedBox(
                 height: 5,
               ),
-              TextField(
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFD9D9D9),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFFFFB800),
-                      width: 1,
-                    ),
-                  ),
-                  filled: true,
-                  hintStyle: TextStyle(
-                      color: Color(0xFF4E4E4E),
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400),
-                  hintText: "+7",
-                  fillColor: Colors.white70,
-                ),
-                controller: controller,
+              PinCodeTextField(
+                appContext: context,
+                length: 5,
                 keyboardType: TextInputType.number,
-                inputFormatters: [MaskedInputFormatter('+7(###) ###-##-##')],
-              ),
-              SizedBox(
-                height: 120,
-              ),
-              ElevatedButton(
-                onPressed: isButtonActive
-                    ? () {
-                        setState(() => isButtonActive = false);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ConfirmtionPage(),
-                          ),
-                        );
-                      }
-                    : null,
-                child: Text(
-                  'Отправить смс-код',
-                  style: TextStyle(
-                      color: Color(0xFF4E4E4E),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
+                animationType: AnimationType.none,
+                cursorColor: Colors.black,
+                controller: TextEditingController(),
+                onChanged: (value) {},
+                pinTheme: PinTheme(
+                  inactiveColor: AppColors.grey_1,
+                  activeColor: AppColors.grey_1,
                 ),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFFFB800),
-                  shadowColor: Colors.black,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  minimumSize: Size(285, 53),
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                width: 220,
-                child: RichText(
-                  text: TextSpan(
-                    text:
-                        "Нажимая на данную кнопку, вы даете согласие на обработку ",
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFFA7A7A7),
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'персональных данных',
-                        style: TextStyle(color: Colors.yellow),
+                onCompleted: (value) {
+                  if (value == requiredNumber) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyProjects(),
                       ),
-                    ],
-                  ),
+                    );
+                  } else {
+                    print('invalid pin');
+                  }
+                },
+              ),
+              SizedBox(
+                height: 62,
+              ),
+              SizedBox(
+                width: 250,
+                child: Text(
+                  '60 сек до повтора отправки кода',
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.grey_1,
+                  ),
                 ),
               ),
             ],
