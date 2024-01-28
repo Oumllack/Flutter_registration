@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:test_pt/assets/colors.dart';
 import 'package:test_pt/ui/pages/home_page/widgets/registration_body.dart';
-import 'package:test_pt/ui/widgets/setps_widget.dart';
+import 'package:test_pt/ui/widgets/steps_widget.dart';
 import '../confirmation_page.dart';
 
 class CreateAccountPage extends StatefulWidget {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_pt/ui/MyName.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -52,7 +53,7 @@ class _MyAccountState extends State<MyAccount> {
                     width: 80,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/icon.png'),
+                        image: AssetImage('assets/images/icon.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -89,13 +90,40 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Имя',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF4C4C4C),
-                        ),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Имя',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF4C4C4C),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 175,
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Настроить',
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MyName(),
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(Icons.arrow_forward_ios),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

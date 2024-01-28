@@ -177,10 +177,11 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 42),
+              const SizedBox(height: 32),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 55.0),
                 child: PinCodeTextField(
+                  backgroundColor: Color(0xFFFBFBFB),
                   appContext: context,
                   length: 5,
                   keyboardType: TextInputType.number,
@@ -206,7 +207,7 @@ class _ConfirmationPageState extends State<ConfirmationPage> {
                   },
                 ),
               ),
-              const SizedBox(height: 62),
+              const SizedBox(height: 44),
               const _SendCodeTimer(),
             ],
           ),
@@ -258,7 +259,14 @@ class _SendCodeTimerState extends State<_SendCodeTimer> {
   Widget build(BuildContext context) {
     return remainingTime == 0
         ? CupertinoButton(
-            child: const Text('Отправить код еще раз'),
+            child: const Text(
+              'Отправить код еще раз',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: Color(0xFFFFB700),
+              ),
+            ),
             onPressed: () {
               remainingTime = 60;
               startTimer();
