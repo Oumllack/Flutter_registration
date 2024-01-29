@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:test_pt/assets/colors.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class RegistrationBody extends StatelessWidget {
   const RegistrationBody({
     super.key,
@@ -79,6 +81,33 @@ class _SmsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
+      // () async {
+      //   final Uri url = Uri(
+      //     scheme: 'sms',
+      //     path: "+79857409447",
+      //   );
+      //   {
+      //     if (await canLaunchUrl(url)) {
+      //       String uri =
+      //           'sms:+79857409447?body=${Uri.encodeComponent("12345")}';
+      //       await launchUrl(Uri.parse(uri));
+      //     } else {
+      //       print('cannot send sms');
+      //     }
+      //   }
+      // },
+
+      // () async {
+      //   final Uri url = Uri(
+      //     scheme: 'sms',
+      //     path: "+79857409447",
+      //   );
+      //   if (await canLaunchUrl(url)) {
+      //     await launchUrl(url);
+      //   } else {
+      //     print('cannot send sms');
+      //   }
+      // },
       style: ElevatedButton.styleFrom(
         primary: AppColors.yellow,
         shadowColor: Colors.black,

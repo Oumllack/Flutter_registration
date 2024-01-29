@@ -4,14 +4,14 @@ import 'package:test_pt/ui/pages/my_account.dart';
 import 'package:test_pt/ui/pages/my_plans.dart';
 import 'package:test_pt/ui/pages/my_projects.dart';
 
-class MyName extends StatefulWidget {
-  const MyName({super.key});
+class MyFamilyName extends StatefulWidget {
+  const MyFamilyName({super.key});
 
   @override
-  State<MyName> createState() => _MyNameState();
+  State<MyFamilyName> createState() => _MyFamilyNameState();
 }
 
-class _MyNameState extends State<MyName> {
+class _MyFamilyNameState extends State<MyFamilyName> {
   int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
@@ -116,7 +116,7 @@ class _MyNameState extends State<MyName> {
                         color: Color(0xFFC6C6C8),
                       ),
                     ),
-                    hintText: "Ваше Имя",
+                    hintText: "Ваша Фамилия",
                     hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -130,5 +130,6 @@ class _MyNameState extends State<MyName> {
         ),
       ),
     );
+    ;
   }
 }

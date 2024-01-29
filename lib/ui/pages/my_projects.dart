@@ -11,7 +11,7 @@ class MyProjects extends StatefulWidget {
 }
 
 class _MyProjectsState extends State<MyProjects> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   List<Widget> _screens = [
     MyPlans(),
     MyAccount(),

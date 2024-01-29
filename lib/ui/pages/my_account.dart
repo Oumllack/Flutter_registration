@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:test_pt/ui/MyFamilyName.dart';
 import 'package:test_pt/ui/MyName.dart';
+import 'package:test_pt/assets/colors.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -27,9 +29,8 @@ class _MyAccountState extends State<MyAccount> {
         leading: Row(
           children: [
             Icon(
-              Icons.arrow_back_ios_new_rounded,
+              (Icons.arrow_back_ios_new_rounded),
               color: Color(0xFF0098EE),
-              size: 20,
             ),
             Text(
               'Мой аккаунт',
@@ -88,9 +89,9 @@ class _MyAccountState extends State<MyAccount> {
                         topRight: Radius.circular(13),
                       ),
                     ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
+                    child: Container(
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Имя',
@@ -108,6 +109,11 @@ class _MyAccountState extends State<MyAccount> {
                               children: [
                                 Text(
                                   'Настроить',
+                                  style: TextStyle(
+                                    color: Color(0xFFC6C6C8),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () {
@@ -118,7 +124,9 @@ class _MyAccountState extends State<MyAccount> {
                                       ),
                                     );
                                   },
-                                  icon: Icon(Icons.arrow_forward_ios),
+                                  icon: Icon(Icons.arrow_forward_ios_rounded),
+                                  iconSize: 20,
+                                  color: Color(0xFFC6C6C8),
                                 ),
                               ],
                             ),
@@ -146,13 +154,47 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Фамилия',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF4C4C4C),
-                        ),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Фамилия',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF4C4C4C),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 138,
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Настроить',
+                                  style: TextStyle(
+                                    color: Color(0xFFC6C6C8),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MyFamilyName(),
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(Icons.arrow_forward_ios_rounded),
+                                  iconSize: 20,
+                                  color: Color(0xFFC6C6C8),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
