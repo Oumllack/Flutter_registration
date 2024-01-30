@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:test_pt/ui/pages/my_name.dart';
 
 class MyAccount extends StatefulWidget {
@@ -88,6 +91,74 @@ class _MyAccountState extends State<MyAccount> {
                 color: const Color(0xFFC6C6C8),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PhotoWidget extends StatefulWidget {
+  const _PhotoWidget({super.key});
+
+  @override
+  State<_PhotoWidget> createState() => _PhotoWidgetState();
+}
+
+class _PhotoWidgetState extends State<_PhotoWidget> {
+  Uint8List? bytes;
+
+  _saveAndUpdate(XFile? value) async {
+    bytes = await value?.readAsBytes();
+    Navigator.pop(context);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        final ImagePicker picker = ImagePicker();
+        showCupertinoModalPopup(
+          context: context,
+          builder: (context) => CupertinoActionSheet(
+            title: Text('Title'),
+            actions: [
+              CupertinoActionSheetAction(
+                onPressed: () async {
+                  await picker
+                      .pickImage(source: ImageSource.camera)
+                      .then(_saveAndUpdate);
+                },
+                child: Text('Камера'),
+              ),
+              CupertinoActionSheetAction(
+                onPressed: () async {
+                  await picker
+                      .pickImage(source: ImageSource.gallery)
+                      .then(_saveAndUpdate);
+                },
+                child: Text('Gallery'),
+              )
+            ],
+            cancelButton: CupertinoActionSheetAction(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Close'),
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 80,
+        width: 80,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: bytes != null
+                ? MemoryImage(bytes!) as ImageProvider
+                : const AssetImage('assets/images/icon.png'),
+            fit: BoxFit.cover,
           ),
         ),
       ),
