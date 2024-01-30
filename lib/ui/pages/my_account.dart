@@ -45,7 +45,21 @@ class _MyAccountState extends State<MyAccount> {
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
           child: Column(
             children: [
-              const _PhotoWidget(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/icon.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 16),
               const Text(
                 'apollo@gmail.com',
@@ -74,49 +88,6 @@ class _MyAccountState extends State<MyAccount> {
                 color: const Color(0xFFC6C6C8),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PhotoWidget extends StatelessWidget {
-  const _PhotoWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: () {
-        showCupertinoModalPopup(
-          context: context,
-          builder: (context) => CupertinoActionSheet(
-            title: Text('Title'),
-            actions: [
-              CupertinoActionSheetAction(
-                onPressed: () {},
-                child: Text('Камера'),
-              ),
-              CupertinoActionSheetAction(
-                onPressed: () {},
-                child: Text('Close'),
-              )
-            ],
-            cancelButton: CupertinoActionSheetAction(
-              onPressed: () {},
-              child: Text('Close'),
-            ),
-          ),
-        );
-      },
-      child: Container(
-        height: 80,
-        width: 80,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/icon.png'),
-            fit: BoxFit.cover,
           ),
         ),
       ),
