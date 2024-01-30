@@ -1,7 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_pt/ui/MyFamilyName.dart';
-import 'package:test_pt/ui/MyName.dart';
-import 'package:test_pt/assets/colors.dart';
+import 'package:test_pt/ui/pages/MyName.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -16,7 +15,7 @@ class _MyAccountState extends State<MyAccount> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 150,
-        title: Text(
+        title: const Text(
           'Аккаунт',
           style: TextStyle(
               color: Color(0xFF4C4C4C),
@@ -24,9 +23,9 @@ class _MyAccountState extends State<MyAccount> {
               fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFFF6F6F6),
+        backgroundColor: const Color(0xFFF6F6F6),
         elevation: 0.3,
-        leading: Row(
+        leading: const Row(
           children: [
             Icon(
               (Icons.arrow_back_ios_new_rounded),
@@ -43,7 +42,7 @@ class _MyAccountState extends State<MyAccount> {
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
           child: Column(
             children: [
               Row(
@@ -52,7 +51,7 @@ class _MyAccountState extends State<MyAccount> {
                   Container(
                     height: 80,
                     width: 80,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/icon.png'),
                         fit: BoxFit.cover,
@@ -61,10 +60,8 @@ class _MyAccountState extends State<MyAccount> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'apollo@gmail.com',
                 style: TextStyle(
                   fontSize: 12,
@@ -72,141 +69,96 @@ class _MyAccountState extends State<MyAccount> {
                   color: Color(0xFF7D7D7D),
                 ),
               ),
-              SizedBox(
-                height: 24,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    height: 48,
-                    width: 359,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(13),
-                        topRight: Radius.circular(13),
-                      ),
-                    ),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Имя',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF4C4C4C),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 175,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Настроить',
-                                  style: TextStyle(
-                                    color: Color(0xFFC6C6C8),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MyName(),
-                                      ),
-                                    );
-                                  },
-                                  icon: Icon(Icons.arrow_forward_ios_rounded),
-                                  iconSize: 20,
-                                  color: Color(0xFFC6C6C8),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 24),
+              ProfileDetailsButton(
+                title: 'Имя',
+                hasBorder: true,
+                onPressed: () {},
               ),
               Container(
-                width: 359,
                 height: 1,
-                color: Color(0xFFC6C6C8),
+                color: const Color(0xFFC6C6C8),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    height: 48,
-                    width: 359,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Text(
-                            'Фамилия',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF4C4C4C),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 138,
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Настроить',
-                                  style: TextStyle(
-                                    color: Color(0xFFC6C6C8),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MyFamilyName(),
-                                      ),
-                                    );
-                                  },
-                                  icon: Icon(Icons.arrow_forward_ios_rounded),
-                                  iconSize: 20,
-                                  color: Color(0xFFC6C6C8),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              ProfileDetailsButton(
+                title: 'Фамилия',
+                onPressed: () {},
               ),
               Container(
-                width: 359,
                 height: 1,
-                color: Color(0xFFC6C6C8),
+                color: const Color(0xFFC6C6C8),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileDetailsButton extends StatelessWidget {
+  const ProfileDetailsButton({
+    super.key,
+    required this.title,
+    this.endText = 'Настроить',
+    this.hasBorder = false,
+    required this.onPressed,
+  });
+
+  final bool hasBorder;
+  final String title;
+  final String endText;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      color: Colors.white,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyName(),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          borderRadius: hasBorder
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(13),
+                  topRight: Radius.circular(13),
+                )
+              : null,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Color(0xFF4C4C4C),
+              ),
+            ),
+            const Spacer(),
+            Text(
+              endText,
+              style: const TextStyle(
+                color: Color(0xFFC6C6C8),
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 20,
+              color: Color(0xFFC6C6C8),
+            ),
+          ],
         ),
       ),
     );
