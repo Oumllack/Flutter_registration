@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:test_pt/assets/colors.dart';
-import 'package:test_pt/ui/pages/my_account.dart';
-import 'package:test_pt/ui/pages/my_plans.dart';
 import 'package:test_pt/ui/pages/my_projects.dart';
 
 class MyName extends StatefulWidget {
-  const MyName({super.key});
+  const MyName({super.key, required this.hintText});
+
+  final String hintText;
 
   @override
   State<MyName> createState() => _MyNameState();
@@ -13,20 +13,22 @@ class MyName extends StatefulWidget {
 
 class _MyNameState extends State<MyName> {
   int _selectedIndex = 1;
+  String name = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 150,
         title: Text(
-          'Ваше Имя',
-          style: TextStyle(
+          widget.hintText,
+          style: const TextStyle(
               color: Color(0xFF4C4C4C),
               fontSize: 17,
               fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFFF6F6F6),
+        backgroundColor: const Color(0xFFF6F6F6),
         elevation: 0.3,
         leading: Row(
           children: [
@@ -90,21 +92,21 @@ class _MyNameState extends State<MyName> {
         currentIndex: _selectedIndex,
       ),
       body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 24,
-              ),
-              child: SizedBox(
-                width: 359,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+          child: Column(
+            children: [
+              SizedBox(
                 height: 48,
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      name = value;
+                    });
+                  },
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                      ),
+                      borderSide: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(
                         13,
                       ),
@@ -116,8 +118,8 @@ class _MyNameState extends State<MyName> {
                         color: Color(0xFFC6C6C8),
                       ),
                     ),
-                    hintText: "Ваше Имя",
-                    hintStyle: TextStyle(
+                    hintText: widget.hintText,
+                    hintStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Color(0xFFC6C6C8),
@@ -125,8 +127,29 @@ class _MyNameState extends State<MyName> {
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed:
+                    name.isEmpty ? null : () => Navigator.pop(context, name),
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.yellow,
+                  shadowColor: Colors.black,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(285, 53),
+                ),
+                child: const Text(
+                  'Cохранить',
+                  style: TextStyle(
+                      color: Color(0xFF4E4E4E),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

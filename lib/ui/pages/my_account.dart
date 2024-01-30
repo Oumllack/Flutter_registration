@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_pt/ui/pages/MyName.dart';
+import 'package:test_pt/ui/pages/my_name.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key});
@@ -95,7 +95,7 @@ class _MyAccountState extends State<MyAccount> {
   }
 }
 
-class ProfileDetailsButton extends StatelessWidget {
+class ProfileDetailsButton extends StatefulWidget {
   const ProfileDetailsButton({
     super.key,
     required this.title,
@@ -110,22 +110,34 @@ class ProfileDetailsButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   @override
+  State<ProfileDetailsButton> createState() => _ProfileDetailsButtonState();
+}
+
+class _ProfileDetailsButtonState extends State<ProfileDetailsButton> {
+  late String endText = widget.endText;
+
+  @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       color: Colors.white,
-      onPressed: () {
-        Navigator.push(
+      onPressed: () async {
+        final newName = await Navigator.push<String>(
           context,
           MaterialPageRoute(
-            builder: (context) => MyName(),
+            builder: (context) => MyName(
+              hintText: widget.title,
+            ),
           ),
         );
+        setState(() {
+          endText = newName ?? '';
+        });
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          borderRadius: hasBorder
+          borderRadius: widget.hasBorder
               ? const BorderRadius.only(
                   topLeft: Radius.circular(13),
                   topRight: Radius.circular(13),
@@ -136,7 +148,7 @@ class ProfileDetailsButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              title,
+              widget.title,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -146,8 +158,10 @@ class ProfileDetailsButton extends StatelessWidget {
             const Spacer(),
             Text(
               endText,
-              style: const TextStyle(
-                color: Color(0xFFC6C6C8),
+              style: TextStyle(
+                color: endText == 'Настроить'
+                    ? const Color(0xFFC6C6C8)
+                    : const Color(0xFF7d7d7d),
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
               ),
