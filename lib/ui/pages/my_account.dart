@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:test_pt/ui/pages/my_name.dart';
 
 class MyAccount extends StatefulWidget {
@@ -86,25 +89,34 @@ class _PhotoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Uint8List? bytes;
+
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
+        final ImagePicker picker = ImagePicker();
         showCupertinoModalPopup(
           context: context,
           builder: (context) => CupertinoActionSheet(
             title: Text('Title'),
             actions: [
               CupertinoActionSheetAction(
-                onPressed: () {},
+                onPressed: () async {
+                  await picker.pickImage(source: ImageSource.camera).then(
+                      (value) async => bytes = await value?.readAsBytes());
+                },
                 child: Text('Камера'),
               ),
               CupertinoActionSheetAction(
-                onPressed: () {},
-                child: Text('Close'),
+                onPressed: () async {
+                  await picker.pickImage(source: ImageSource.gallery).then(
+                      (value) async => bytes = await value?.readAsBytes());
+                },
+                child: Text('Gallery'),
               )
             ],
             cancelButton: CupertinoActionSheetAction(
-              onPressed: () {},
+              onPressed: () => Navigator.pop(context),
               child: Text('Close'),
             ),
           ),
@@ -113,9 +125,12 @@ class _PhotoWidget extends StatelessWidget {
       child: Container(
         height: 80,
         width: 80,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
           image: DecorationImage(
-            image: AssetImage('assets/images/icon.png'),
+            image: bytes != null
+                ? MemoryImage(bytes) as ImageProvider
+                : AssetImage('assets/images/icon.png'),
             fit: BoxFit.cover,
           ),
         ),
