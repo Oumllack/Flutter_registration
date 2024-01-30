@@ -84,13 +84,24 @@ class _MyAccountState extends State<MyAccount> {
   }
 }
 
-class _PhotoWidget extends StatelessWidget {
+class _PhotoWidget extends StatefulWidget {
   const _PhotoWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Uint8List? bytes;
+  State<_PhotoWidget> createState() => _PhotoWidgetState();
+}
 
+class _PhotoWidgetState extends State<_PhotoWidget> {
+  Uint8List? bytes;
+
+  _saveAndUpdate(XFile? value) async {
+    bytes = await value?.readAsBytes();
+    Navigator.pop(context);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
@@ -102,15 +113,17 @@ class _PhotoWidget extends StatelessWidget {
             actions: [
               CupertinoActionSheetAction(
                 onPressed: () async {
-                  await picker.pickImage(source: ImageSource.camera).then(
-                      (value) async => bytes = await value?.readAsBytes());
+                  await picker
+                      .pickImage(source: ImageSource.camera)
+                      .then(_saveAndUpdate);
                 },
                 child: Text('Камера'),
               ),
               CupertinoActionSheetAction(
                 onPressed: () async {
-                  await picker.pickImage(source: ImageSource.gallery).then(
-                      (value) async => bytes = await value?.readAsBytes());
+                  await picker
+                      .pickImage(source: ImageSource.gallery)
+                      .then(_saveAndUpdate);
                 },
                 child: Text('Gallery'),
               )
@@ -129,8 +142,8 @@ class _PhotoWidget extends StatelessWidget {
           shape: BoxShape.circle,
           image: DecorationImage(
             image: bytes != null
-                ? MemoryImage(bytes) as ImageProvider
-                : AssetImage('assets/images/icon.png'),
+                ? MemoryImage(bytes!) as ImageProvider
+                : const AssetImage('assets/images/icon.png'),
             fit: BoxFit.cover,
           ),
         ),
