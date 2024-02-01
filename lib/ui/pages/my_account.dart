@@ -51,16 +51,7 @@ class _MyAccountState extends State<MyAccount> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 80,
-                    width: 80,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/icon.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                  _PhotoWidget(),
                 ],
               ),
               const SizedBox(height: 16),
@@ -139,12 +130,17 @@ class _PhotoWidgetState extends State<_PhotoWidget> {
                       .pickImage(source: ImageSource.gallery)
                       .then(_saveAndUpdate);
                 },
-                child: Text('Gallery'),
+                child: Text('Галерея Фото'),
               )
             ],
             cancelButton: CupertinoActionSheetAction(
               onPressed: () => Navigator.pop(context),
-              child: Text('Close'),
+              child: Text(
+                'Закрыть',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
         );

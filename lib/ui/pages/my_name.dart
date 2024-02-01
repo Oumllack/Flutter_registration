@@ -132,8 +132,8 @@ class _MyNameState extends State<MyName> {
                 onPressed:
                     name.isEmpty ? null : () => Navigator.pop(context, name),
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.yellow,
-                  shadowColor: Colors.black,
+                  primary: Colors.white,
+                  shadowColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -143,9 +143,9 @@ class _MyNameState extends State<MyName> {
                 child: const Text(
                   'Cохранить',
                   style: TextStyle(
-                      color: Color(0xFF4E4E4E),
+                      color: Color(0xFF0098EE),
                       fontSize: 16,
-                      fontWeight: FontWeight.w400),
+                      fontWeight: FontWeight.w600),
                 ),
               ),
             ],
