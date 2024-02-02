@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:test_pt/assets/colors.dart';
@@ -5,7 +7,15 @@ import 'package:test_pt/ui/pages/home_page/create_account_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: FirebaseOptions(
+              apiKey: "AIzaSyA7fNhSC36_U_ZbCg7rWkoPuDqsk5hEv0Q",
+              appId: "1:27424016059:android:d8c6002b97354eb3a5cb9e",
+              messagingSenderId: "27424016059",
+              projectId: "my-test-app-f4cd2"))
+      : await Firebase.initializeApp;
   runApp(const MyApp());
 }
 

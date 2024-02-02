@@ -132,7 +132,7 @@ class _MyNameState extends State<MyName> {
                 onPressed:
                     name.isEmpty ? null : () => Navigator.pop(context, name),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
+                  backgroundColor: Colors.white,
                   shadowColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(

@@ -82,7 +82,7 @@ class _SmsButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: AppColors.yellow,
+        backgroundColor: AppColors.yellow,
         shadowColor: Colors.black,
         elevation: 0,
         shape: RoundedRectangleBorder(

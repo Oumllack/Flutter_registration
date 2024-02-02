@@ -23,6 +23,8 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+
+
 android {
     namespace "com.example.test_pt"
     compileSdkVersion flutter.compileSdkVersion
@@ -50,6 +52,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -65,4 +68,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:32.7.1')
+    implementation 'com.google.firebase:firebase-analytics'
+}
